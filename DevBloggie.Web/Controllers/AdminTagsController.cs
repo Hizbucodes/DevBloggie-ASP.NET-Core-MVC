@@ -34,7 +34,16 @@ namespace DevBloggie.Web.Controllers
             devBloggieDbContext.Tags.Add(tag);
             devBloggieDbContext.SaveChanges();
 
-            return View("Add");
+            return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        [ActionName("List")]
+        public IActionResult List()
+        {
+            var results = devBloggieDbContext.Tags.ToList();
+
+            return View(results);
         }
     }
 }
