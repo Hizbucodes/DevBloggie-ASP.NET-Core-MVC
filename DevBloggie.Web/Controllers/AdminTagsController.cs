@@ -1,6 +1,7 @@
 ﻿using DevBloggie.Web.Data;
 using DevBloggie.Web.Models.Domain;
 using DevBloggie.Web.Models.ViewModels;
+using DevBloggie.Web.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,11 +9,12 @@ namespace DevBloggie.Web.Controllers
 {
     public class AdminTagsController : Controller
     {
-        private readonly DevBloggieDbContext devBloggieDbContext;
 
-        public AdminTagsController(DevBloggieDbContext devBloggieDbContext)
+        private readonly ITagRepository _tagRepository;
+        public AdminTagsController(ITagRepository tagRepository)
         {
-            this.devBloggieDbContext = devBloggieDbContext;
+            
+            this._tagRepository = tagRepository;
         }
 
         [HttpGet]
@@ -32,9 +34,8 @@ namespace DevBloggie.Web.Controllers
 
             };
 
-           await devBloggieDbContext.Tags.AddAsync(tag);
-           await devBloggieDbContext.SaveChangesAsync();
-
+           await _tagRepository.AddAsync(tag);
+          
             return RedirectToAction("List");
         }
 
@@ -42,7 +43,7 @@ namespace DevBloggie.Web.Controllers
         [ActionName("List")]
         public async Task<IActionResult> List()
         {
-            var results = await devBloggieDbContext.Tags.ToListAsync();
+            var results = await _tagRepository.GetAllAsync();
 
             return View(results);
         }
@@ -50,7 +51,7 @@ namespace DevBloggie.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var tag = await devBloggieDbContext.Tags.FirstOrDefaultAsync(x => x.Id == id);
+            var tag = await _tagRepository.GetAsync(id);
 
             if(tag != null)
             {
@@ -78,35 +79,34 @@ namespace DevBloggie.Web.Controllers
                 DisplayName = editTagRequest.DisplayName,
             };
 
-           var existingTag = await devBloggieDbContext.Tags.FindAsync(tag.Id);
+            var updatedTag = await _tagRepository.UpdateAsync(tag);
 
-            if(existingTag == null)
+            if(updatedTag is not null)
             {
-                return RedirectToAction("Edit", new {id=editTagRequest.Id});
+                // Show successfull message
+            }
+            else
+            {
+                // Show error message
             }
 
-            existingTag.Name = tag.Name;
-            existingTag.DisplayName = tag.DisplayName;
-
-           await devBloggieDbContext.SaveChangesAsync();
-
-            return RedirectToAction("List");
+                return RedirectToAction("List");
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest)
         {
-            var tag = await devBloggieDbContext.Tags.FindAsync(editTagRequest.Id);
+            var deletedTag = await _tagRepository.DeleteAsync(editTagRequest.Id);
 
-            if(tag == null)
+            if (deletedTag is not null)
             {
-                return RedirectToAction("Edit", new { id = editTagRequest.Id});
+                return RedirectToAction("List");
+             
             }
+            return RedirectToAction("Edit", new { id = editTagRequest.Id });
 
-            devBloggieDbContext.Remove(tag);
-           await devBloggieDbContext.SaveChangesAsync();
 
-            return RedirectToAction("List");
+
         }
 
     }
