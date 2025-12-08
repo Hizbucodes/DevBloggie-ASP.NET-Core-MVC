@@ -1,0 +1,11 @@
+﻿using DevBloggie.Web.Models.Domain;
+
+namespace DevBloggie.Web.Models.ViewModels
+{
+    public class EditTagRequest
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+    }
+}
