@@ -1,6 +1,6 @@
-# Dev Blog Web App - a full-featured ASP.NET Core MVC blog using .NET 8, EF Core, and modern web development practices.
+# Dev Blog Web App📝
 
-## Features
+## Features✨
 
 - **ASP.NET Core MVC**: Build scalable web applications from scratch.
 - **Entity Framework Core (EF Core)**: Perform CRUD operations with SQL Server using a Code-First approach.
@@ -16,7 +16,7 @@
 
 ---
 
-## Technologies Used
+## Technologies Used💻
 
 - C#  
 - .NET 8  
@@ -28,7 +28,7 @@
 
 ---
 
-## Getting Started
+## Getting Started🏁
 
 1. **Clone the repository**  
 ```bash
@@ -49,11 +49,11 @@ git clone https://github.com/your-username/dev-blog-web-app.git
 ```
 
 
-6. **Open your browser and navigate to** \`https://localhost:5001\`.
+6. **Open your browser and navigate to** \https://localhost:5001\🌐
 
 ---
 
-## Project Structure
+## Project Structure📂
 
 ```
 /Controllers      - Handles HTTP requests and actions
