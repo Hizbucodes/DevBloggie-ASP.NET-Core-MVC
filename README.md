@@ -31,19 +31,23 @@
 ## Getting Started
 
 1. **Clone the repository**  
-``bash
+```bash
 git clone https://github.com/your-username/dev-blog-web-app.git
-``
+```
 
 2. **Open the project** in Visual Studio 2022 or later.
 
 3. **Update database connection string** in \`appsettings.json\`.
 
 4. **Apply migrations** to set up the database:  
-``bash
-Add-Migration <MigrationName> -Context <YourDbContextName>
-Update-Database -Context <YourDbContextName>
-``
+```bash
+  Add-Migration <MigrationName> -Context <YourDbContextName>
+```
+5. **Update Database** to see the changes:
+```bash
+  Update-Database -Context <YourDbContextName>
+```
+
 
 6. **Open your browser and navigate to** \`https://localhost:5001\`.
 
