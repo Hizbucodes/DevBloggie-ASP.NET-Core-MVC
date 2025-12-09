@@ -2,7 +2,7 @@
 
 ## Features✨
 
-- **ASP.NET Core MVC**: Build scalable web applications from scratch.
+- **ASP.NET Core MVC**: scalable web application.
 - **Entity Framework Core (EF Core)**: Perform CRUD operations with SQL Server using a Code-First approach.
 - **Repository Pattern & Domain-Driven Design (DDD)**: Organize code for maintainability and scalability.
 - **Authentication & Authorization**: Implement role-based login and registration using **Microsoft Identity**.
@@ -12,7 +12,7 @@
 - **Image Upload**: Upload images to popular 3rd-party hosting providers via SDK.
 - **WYSIWYG Editor**: Rich text editor integrated with image upload.
 - **Dependency Injection**: Apply DI for better code modularity and testability.
-- **Advanced ASP.NET Core Concepts**: Learn and apply best practices in modern web development.
+- **Advanced ASP.NET Core Concepts**: Applied best practices in modern web development.
 
 ---
 
