@@ -1,5 +1,6 @@
 ﻿using DevBloggie.Web.Data;
 using DevBloggie.Web.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevBloggie.Web.Repositories
 {
@@ -25,9 +26,9 @@ namespace DevBloggie.Web.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<BlogPost>> GetAllAsync()
+        public async Task<IEnumerable<BlogPost>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _devBloggieDbContext.BlogPosts.Include(x=>x.Tags).ToListAsync();
         }
 
         public Task<BlogPost?> GetAsync(Guid id)

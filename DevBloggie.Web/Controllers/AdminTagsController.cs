@@ -27,14 +27,14 @@ namespace DevBloggie.Web.Controllers
         [ActionName("Add")]
         public async Task<IActionResult> SubmitTag(AddTagRequest addTagRequest)
         {
-            var tag = new Tag
+            var tagDomainModel = new Tag
 {
                 Name = addTagRequest.Name,
                 DisplayName = addTagRequest.DisplayName,
 
             };
 
-           await _tagRepository.AddAsync(tag);
+           await _tagRepository.AddAsync(tagDomainModel);
           
             return RedirectToAction("List");
         }
@@ -53,7 +53,7 @@ namespace DevBloggie.Web.Controllers
         {
             var tag = await _tagRepository.GetAsync(id);
 
-            if(tag != null)
+            if(tag is not null)
             {
                 var editTagRequest = new EditTagRequest
                 {

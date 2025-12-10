@@ -66,7 +66,17 @@ namespace DevBloggie.Web.Controllers
 
             await _blogPostRepository.AddAsync(blogPostDomainModel);
 
-            return RedirectToAction("Add");
+            return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            // Call the repository to get the data
+            var devBlogPosts = await _blogPostRepository.GetAllAsync();
+
+
+            return View(devBlogPosts);
         }
     }
 }

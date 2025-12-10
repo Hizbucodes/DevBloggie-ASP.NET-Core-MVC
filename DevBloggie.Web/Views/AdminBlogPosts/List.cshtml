@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DevBloggie.Web.Models.Domain.BlogPost>
+@{
+}
+
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>All Blog Posts - Admin Functionality</h1>
+    </div>
+</div>
+
+
+<div class="container py-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Heading</td>
+                <td>Tags</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var blogPost in Model)
+            {
+                <tr>
+                    <td>
+                        @blogPost.Id
+                    </td>
+                    <td>
+                        @blogPost.Heading
+                    </td>
+                    <td>
+                          <div class="d-flex gap-2">
+                              @foreach(var tag in blogPost.Tags)
+                            {
+                                <span class="badge bg-secondary">@tag.DisplayName</span>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
