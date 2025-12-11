@@ -32,7 +32,7 @@
 
 1. **Clone the repository**  
 ```bash
-git clone https://github.com/your-username/dev-blog-web-app.git
+https://github.com/Hizbucodes/DevBloggie-ASP.NET-Core-MVC.git
 ```
 
 2. **Open the project** in Visual Studio 2022 or later.
