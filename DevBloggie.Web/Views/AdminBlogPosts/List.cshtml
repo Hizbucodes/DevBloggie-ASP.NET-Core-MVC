@@ -11,41 +11,47 @@
 
 
 <div class="container py-5">
-    <table class="table">
-        <thead>
-            <tr>
-                <td>Id</td>
-                <td>Heading</td>
-                <td>Tags</td>
-                <td>Edit</td>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var blogPost in Model)
-            {
+   @if(Model is not null && Model.Any())
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @blogPost.Id
-                    </td>
-                    <td>
-                        @blogPost.Heading
-                    </td>
-                    <td>
-                          <div class="d-flex gap-2">
-                              @foreach(var tag in blogPost.Tags)
-                            {
-                                <span class="badge bg-secondary">@tag.DisplayName</span>
-                            }
-                        </div>
-                    </td>
-                    <td>
-                        <a asp-area="" asp-controller="AdminBlogPosts" asp-action="Edit" asp-route-id="@blogPost.Id">
-                            Edit
-                        </a>
-                    </td>
+                    <td>Id</td>
+                    <td>Heading</td>
+                    <td>Tags</td>
+                    <td>Edit</td>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                @foreach (var blogPost in Model)
+                {
+                    <tr>
+                        <td>
+                            @blogPost.Id
+                        </td>
+                        <td>
+                            @blogPost.Heading
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                @foreach (var tag in blogPost.Tags)
+                                {
+                                    <span class="badge bg-secondary">@tag.DisplayName</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <a asp-area="" asp-controller="AdminBlogPosts" asp-action="Edit" asp-route-id="@blogPost.Id">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }else
+    {
+        <p>No Blog Post Found</p>
+    }
 </div>

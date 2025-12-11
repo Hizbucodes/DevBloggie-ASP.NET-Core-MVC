@@ -84,7 +84,6 @@ namespace DevBloggie.Web.Controllers
         {
             // Retrieve the results from the repository
             var blogPost = await _blogPostRepository.GetAsync(id);
-
             var tagsDomainModel = await _tagRepository.GetAllAsync();
 
             if(blogPost is not null)
@@ -106,10 +105,11 @@ namespace DevBloggie.Web.Controllers
                     SelectedTags = blogPost.Tags.Select(x => x.Id.ToString()).ToArray()
                 };
 
+                // Pass data to the view
                 return View(model);
             }
 
-            // Pass data to the view
+            
             return View(null);
         }
 
@@ -159,6 +159,19 @@ namespace DevBloggie.Web.Controllers
             // Show error notification
             return RedirectToAction("Edit");
   
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(EditBlogPostRequest editBlogPostRequest)
+        {
+           var deletedBlogPost = await _blogPostRepository.DeleteAsync(editBlogPostRequest.Id);
+
+            if(deletedBlogPost is not null)
+            {
+                return RedirectToAction("List");
+            }
+
+            return RedirectToAction("Edit", new { id = editBlogPostRequest.Id });
         }
     }
 }
