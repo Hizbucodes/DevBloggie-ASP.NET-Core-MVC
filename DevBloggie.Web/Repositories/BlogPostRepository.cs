@@ -31,14 +31,43 @@ namespace DevBloggie.Web.Repositories
             return await _devBloggieDbContext.BlogPosts.Include(x=>x.Tags).ToListAsync();
         }
 
-        public Task<BlogPost?> GetAsync(Guid id)
+        public async Task<BlogPost?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var existingBlogPost = await _devBloggieDbContext.BlogPosts.Include(x=> x.Tags).FirstOrDefaultAsync(x => x.Id == id);
+
+            if(existingBlogPost is not null)
+            {
+                return existingBlogPost;
+            }
+
+            return null;
         }
 
-        public Task<BlogPost?> UpdateAsync(BlogPost blogPost)
+        public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
-            throw new NotImplementedException();
+            var existingBlogPost = await _devBloggieDbContext.BlogPosts.Include(x=>x.Tags).FirstOrDefaultAsync(x => x.Id == blogPost.Id);
+
+            if(existingBlogPost is not null)
+            {
+                existingBlogPost.Id = blogPost.Id;
+                existingBlogPost.Heading = blogPost.Heading;
+                existingBlogPost.PageTitle = blogPost.PageTitle;
+                existingBlogPost.ShortDescription = blogPost.ShortDescription;
+                existingBlogPost.Author = blogPost.Author;
+                existingBlogPost.PublishedDate = blogPost.PublishedDate;
+                existingBlogPost.Content = blogPost.Content;
+                existingBlogPost.FeaturedImageUrl = blogPost.FeaturedImageUrl;
+                existingBlogPost.UrlHandle = blogPost.UrlHandle;
+                existingBlogPost.Visible = blogPost.Visible;
+                existingBlogPost.Tags = blogPost.Tags;
+
+                await _devBloggieDbContext.SaveChangesAsync();
+
+                return existingBlogPost;
+            }
+
+            return null;
+           
         }
     }
 }
