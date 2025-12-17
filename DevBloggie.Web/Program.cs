@@ -1,11 +1,22 @@
 using DevBloggie.Web.Data;
 using DevBloggie.Web.Repositories;
+using DevBloggie.Web.Settings;
+using dotenv.net;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+DotEnv.Load(new DotEnvOptions(
+    probeForEnv: true
+));
+
+
+builder.Configuration.AddEnvironmentVariables();
+
 
 builder.Services.AddDbContext<DevBloggieDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DevBloggieDbConnectionString")));
@@ -13,6 +24,11 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DevBloggieDbConn
 
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+builder.Services.AddScoped<IImageRepository, CloudinaryImageRepository>();
+
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+
 
 var app = builder.Build();
 

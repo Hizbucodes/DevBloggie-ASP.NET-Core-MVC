@@ -173,5 +173,6 @@ namespace DevBloggie.Web.Controllers
 
             return RedirectToAction("Edit", new { id = editBlogPostRequest.Id });
         }
+
     }
 }
