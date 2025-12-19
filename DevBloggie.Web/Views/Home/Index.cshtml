@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DevBloggie.Web.Models.Domain.BlogPost>;
+﻿@model DevBloggie.Web.Models.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -24,11 +24,28 @@
 </div>
 
 <div class="container">
+
+    <div class="row">
+
+        <div class="col-3">
+            <h4>All Categories</h4>
+            @if(Model is not null && Model.tags.Any())
+            {
+                @foreach(var tag in Model.tags)
+                {
+                    <span class="badge bg-dark me-1">@tag.Name</span>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-6 rounded">
-            @if(Model is not null && Model.Any())
+            @if(Model is not null && Model.BlogPosts.Any())
             {
-                foreach(var blogPost in Model)
+                foreach(var blogPost in Model.BlogPosts)
                 {
                     <div class="mb-5 bg-light box-shadow px-3 py-2 rounded">
                         <img src="@blogPost.FeaturedImageUrl" 
