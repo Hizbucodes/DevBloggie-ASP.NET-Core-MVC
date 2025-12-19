@@ -5,7 +5,7 @@ namespace DevBloggie.Web.Data
 {
     public class DevBloggieDbContext : DbContext
     {
-        public DevBloggieDbContext(DbContextOptions options) : base(options)
+        public DevBloggieDbContext(DbContextOptions<DevBloggieDbContext> options) : base(options)
         {
 
         }
