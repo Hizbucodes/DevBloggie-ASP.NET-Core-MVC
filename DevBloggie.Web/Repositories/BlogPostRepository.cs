@@ -53,6 +53,13 @@ namespace DevBloggie.Web.Repositories
             return null;
         }
 
+        public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle)
+        {
+            var blogPostUrlHandle = await _devBloggieDbContext.BlogPosts.Include(t => t.Tags).FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+
+            return blogPostUrlHandle;
+        }
+
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
             var existingBlogPost = await _devBloggieDbContext.BlogPosts.Include(x=>x.Tags).FirstOrDefaultAsync(x => x.Id == blogPost.Id);

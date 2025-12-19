@@ -8,6 +8,7 @@ namespace DevBloggie.Web.Repositories
         Task<BlogPost?> GetAsync(Guid id);
         Task<BlogPost> AddAsync(BlogPost blogPost);
         Task<BlogPost?> UpdateAsync(BlogPost blogPost);
+        Task<BlogPost?> GetByUrlHandleAsync(string urlHandle);
         Task<BlogPost?> DeleteAsync(Guid id);
     }
 }
