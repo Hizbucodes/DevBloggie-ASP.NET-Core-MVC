@@ -2,6 +2,7 @@ using DevBloggie.Web.Data;
 using DevBloggie.Web.Repositories;
 using DevBloggie.Web.Settings;
 using dotenv.net;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -20,6 +21,12 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddDbContext<DevBloggieDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DevBloggieDbConnectionString")));
+
+builder.Services.AddDbContext<AuthDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DevBloggieAuthDbConnectionString")));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AuthDbContext>();
+
 
 
 builder.Services.AddScoped<ITagRepository, TagRepository>();
@@ -47,6 +54,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
