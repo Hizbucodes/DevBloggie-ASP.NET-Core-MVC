@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<DevBloggie.Web.Models.Domain.BlogPost>;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -18,6 +19,43 @@
             <img src="https://images.pexels.com/photos/3584996/pexels-photo-3584996.jpeg"
             alt="DevBloggie"
             class="d-block mx-lg-auto img-fluid" width="300"/>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6 rounded">
+            @if(Model is not null && Model.Any())
+            {
+                foreach(var blogPost in Model)
+                {
+                    <div class="mb-5 bg-light box-shadow px-3 py-2 rounded">
+                        <img src="@blogPost.FeaturedImageUrl" 
+                        alt="@blogPost.Heading"
+                             class="mb-2 d-block img-fluid rounded" />
+                        <h3 class="mb-4">@blogPost.Heading</h3>
+                        <p class="mb-2 fw-bold">
+                            Author: @blogPost.Author
+                            <br/>
+                            Published Date: @blogPost.PublishedDate.ToShortDateString()
+                        </p>
+                        @if(blogPost.Tags is not null && blogPost.Tags.Any())
+                        {
+                            <div class="mb-4">
+                                @foreach(var tag in blogPost.Tags)
+                                {
+                                <span class="badge bg-secondary">@tag.DisplayName</span>
+                                }
+                            </div>
+                        }
+                        <p class="mb-5">
+                            @blogPost.ShortDescription
+                        </p>
+                        <a class="btn btn-dark" href="#">Read More</a>
+                    </div>
+                }
+            }
         </div>
     </div>
 </div>
