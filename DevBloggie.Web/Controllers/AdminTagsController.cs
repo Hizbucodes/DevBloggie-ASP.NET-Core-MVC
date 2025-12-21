@@ -2,6 +2,7 @@
 using DevBloggie.Web.Models.Domain;
 using DevBloggie.Web.Models.ViewModels;
 using DevBloggie.Web.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ namespace DevBloggie.Web.Controllers
             this._tagRepository = tagRepository;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Add()
         {
