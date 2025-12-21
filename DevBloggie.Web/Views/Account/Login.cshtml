@@ -1,0 +1,30 @@
+﻿@model DevBloggie.Web.Models.ViewModels.LoginViewModel
+@{
+}
+
+
+<div class="container mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+            <h1 class="mb-3 mt-3 h3">
+                Login To Your Account
+            </h1>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input id="username" type="text" class="form-control" asp-for="Username" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input id="password" type="password" class="form-control" asp-for="Password" />
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-dark">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
