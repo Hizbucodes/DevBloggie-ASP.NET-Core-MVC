@@ -50,9 +50,14 @@ namespace DevBloggie.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl)
         {
-            return View();
+            var model = new LoginViewModel
+            {
+                ReturnUrl = ReturnUrl,
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -62,6 +67,11 @@ namespace DevBloggie.Web.Controllers
         
             if (signInResult is not null && signInResult.Succeeded)
             {
+                if(!string.IsNullOrWhiteSpace(loginViewModel.ReturnUrl))
+                {
+                    return Redirect(loginViewModel.ReturnUrl);
+                }
+
                 return RedirectToAction("Index", "Home");
             }
 

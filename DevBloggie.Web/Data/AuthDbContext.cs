@@ -25,8 +25,8 @@ namespace DevBloggie.Web.Data
             {
                 new IdentityRole
                 {
-                    Name = "admin",
-                    NormalizedName = "admin",
+                    Name = "Admin",
+                    NormalizedName = "Admin",
                     Id = adminRoleId,
                     ConcurrencyStamp = adminRoleId
                 },
