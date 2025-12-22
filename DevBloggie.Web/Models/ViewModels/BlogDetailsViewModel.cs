@@ -16,5 +16,6 @@ namespace DevBloggie.Web.Models.ViewModels
         public bool Visible { get; set; }
         public ICollection<Tag> Tags { get; set; } = new List<Tag>();
         public int TotalLikes { get; set; }
+        public bool Liked { get; set; }
     }
 }
