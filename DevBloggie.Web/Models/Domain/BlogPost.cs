@@ -13,7 +13,8 @@
         public string Author { get; set; } = string.Empty;
         public bool Visible { get; set; }
 
+        // Navigation Properties
         public ICollection<Tag> Tags { get; set; } = new List<Tag>();
-
+        public ICollection<BlogPostLike> BlogPostLikes { get; set; }
     }
 }
