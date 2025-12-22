@@ -17,5 +17,6 @@ namespace DevBloggie.Web.Models.ViewModels
         public ICollection<Tag> Tags { get; set; } = new List<Tag>();
         public int TotalLikes { get; set; }
         public bool Liked { get; set; }
+        public string CommentDescription { get; set; }
     }
 }
