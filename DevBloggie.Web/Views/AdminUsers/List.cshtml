@@ -11,6 +11,13 @@
 
 <div>
     <div class="container py-5">
+
+        <div class="mb-3 d-flex justify-content-end">
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalCreateUser">
+                Create a New User
+            </button>
+        </div>
+
         @if(Model.Users is not null || Model.Users.Any())
         {
             <table class="table">
@@ -56,3 +63,50 @@
     </div>
 </div>
 
+<form method="post">
+<div class="modal fade" id="modalCreateUser" tabindex="-1" aria-labelledby="modalCreateUserLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create New User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" class="form-control" id="username" asp-for="Username"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email" asp-for="Email"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" class="form-control" id="password" asp-for="Password"/>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input type="checkbox" id="checkUserRole" class="form-check-input" value="User" checked disabled/>
+                        <label class="form-check-label" for="checkUserRole">User Role</label>
+                    </div>
+
+                    @if(User.IsInRole("SuperAdmin"))
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" id="checkAdminRole" class="form-check-input" asp-for="AdminRoleCheckBox" />
+                                <label class="form-check-label" for="checkAdminRole">Admin Role</label>
+                            </div>
+                        }
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-dark">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
