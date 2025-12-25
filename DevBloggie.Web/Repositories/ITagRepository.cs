@@ -4,7 +4,7 @@ namespace DevBloggie.Web.Repositories
 {
     public interface ITagRepository
     {
-        public Task<IEnumerable<Tag>> GetAllAsync();
+        public Task<IEnumerable<Tag>> GetAllAsync(string? searchQuery = null);
         public Task<Tag?> GetAsync(Guid id);
         public Task<Tag> AddAsync(Tag tag);
         public Task<Tag?> UpdateAsync(Tag tag);

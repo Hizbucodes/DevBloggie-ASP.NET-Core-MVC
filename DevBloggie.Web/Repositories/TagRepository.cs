@@ -24,7 +24,7 @@ namespace DevBloggie.Web.Repositories
         {
             var existingTag = await _dbContext.Tags.FindAsync(id);
 
-            if(existingTag is not null)
+            if (existingTag is not null)
             {
                 _dbContext.Tags.Remove(existingTag);
                 await _dbContext.SaveChangesAsync();
@@ -35,9 +35,21 @@ namespace DevBloggie.Web.Repositories
             return null;
         }
 
-        public async Task<IEnumerable<Tag>> GetAllAsync()
+        public async Task<IEnumerable<Tag>> GetAllAsync(string? searchQuery)
         {
-          return await _dbContext.Tags.ToListAsync();
+            var query = _dbContext.Tags.AsQueryable();
+
+            // Filtering
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                query = query.Where(x => x.Name.Contains(searchQuery) || x.DisplayName.Contains(searchQuery));
+            }
+
+            // Sorting
+
+            // Pagination
+
+            return await query.ToListAsync();
         }
 
         public async Task<Tag?> GetAsync(Guid id)
@@ -49,7 +61,7 @@ namespace DevBloggie.Web.Repositories
         {
             var existingTag = await _dbContext.Tags.FirstOrDefaultAsync(x => x.Id == tag.Id);
 
-            if(existingTag is not null)
+            if (existingTag is not null)
             {
                 existingTag.Id = tag.Id;
                 existingTag.Name = tag.Name;

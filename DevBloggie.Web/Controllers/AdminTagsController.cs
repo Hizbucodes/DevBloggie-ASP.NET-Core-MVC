@@ -52,9 +52,11 @@ namespace DevBloggie.Web.Controllers
 
         [HttpGet]
         [ActionName("List")]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string? searchQuery)
         {
-            var results = await _tagRepository.GetAllAsync();
+            ViewBag.SearchQuery = searchQuery;
+
+            var results = await _tagRepository.GetAllAsync(searchQuery);
 
             return View(results);
         }
