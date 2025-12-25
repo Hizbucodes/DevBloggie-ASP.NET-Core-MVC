@@ -28,8 +28,14 @@ namespace DevBloggie.Web.Controllers
 
         [HttpPost]
         [ActionName("Add")]
-        public async Task<IActionResult> SubmitTag(AddTagRequest addTagRequest)
+        public async Task<IActionResult> Add(AddTagRequest addTagRequest)
         {
+
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
             var tagDomainModel = new Tag
 {
                 Name = addTagRequest.Name,
