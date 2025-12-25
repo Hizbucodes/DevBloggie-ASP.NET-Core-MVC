@@ -4,6 +4,7 @@ using DevBloggie.Web.Models.ViewModels;
 using DevBloggie.Web.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevBloggie.Web.Controllers
@@ -30,6 +31,7 @@ namespace DevBloggie.Web.Controllers
         [ActionName("Add")]
         public async Task<IActionResult> Add(AddTagRequest addTagRequest)
         {
+            ValidateAddTagRequest(addTagRequest);
 
             if(!ModelState.IsValid)
             {
@@ -116,6 +118,17 @@ namespace DevBloggie.Web.Controllers
 
 
 
+        }
+
+        private void ValidateAddTagRequest(AddTagRequest addTagRequest)
+        {
+            if(addTagRequest.Name is not null && addTagRequest.DisplayName is not null)
+            {
+                if(addTagRequest.Name == addTagRequest.DisplayName)
+                {
+                    ModelState.AddModelError("DisplayName", "The Name cannot be same as DisplayName");
+                }
+            }
         }
 
     }
