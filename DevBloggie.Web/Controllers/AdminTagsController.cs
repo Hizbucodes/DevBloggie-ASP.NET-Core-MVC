@@ -16,11 +16,11 @@ namespace DevBloggie.Web.Controllers
         private readonly ITagRepository _tagRepository;
         public AdminTagsController(ITagRepository tagRepository)
         {
-            
+
             this._tagRepository = tagRepository;
         }
 
-   
+
         [HttpGet]
         public IActionResult Add()
         {
@@ -33,35 +33,55 @@ namespace DevBloggie.Web.Controllers
         {
             ValidateAddTagRequest(addTagRequest);
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
 
             var tagDomainModel = new Tag
-{
+            {
                 Name = addTagRequest.Name,
                 DisplayName = addTagRequest.DisplayName,
 
             };
 
-           await _tagRepository.AddAsync(tagDomainModel);
-          
+            await _tagRepository.AddAsync(tagDomainModel);
+
             return RedirectToAction("List");
         }
 
         [HttpGet]
         [ActionName("List")]
         public async Task<IActionResult> List(
-            string? searchQuery, 
-            string? sortBy, 
-            string? sortDirection)
+            string? searchQuery,
+            string? sortBy,
+            string? sortDirection,
+            int pageSize = 3,
+            int pageNumber = 1
+            )
         {
+
+            var totalRecords = await _tagRepository.CountAync();
+            var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+            if (pageNumber > totalPages)
+            {
+                pageNumber--;
+            }
+
+            if (pageNumber < 1)
+            {
+                pageNumber++;
+            }
+
+            ViewBag.TotalPages = totalPages;
             ViewBag.SearchQuery = searchQuery;
             ViewBag.SortBy = sortBy;
             ViewBag.SortDirection = sortDirection;
+            ViewBag.PageSize = pageSize;
+            ViewBag.PageNumber = pageNumber;
 
-            var results = await _tagRepository.GetAllAsync(searchQuery, sortBy, sortDirection);
+            var results = await _tagRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
 
             return View(results);
         }
@@ -71,7 +91,7 @@ namespace DevBloggie.Web.Controllers
         {
             var tag = await _tagRepository.GetAsync(id);
 
-            if(tag is not null)
+            if (tag is not null)
             {
                 var editTagRequest = new EditTagRequest
                 {
@@ -99,7 +119,7 @@ namespace DevBloggie.Web.Controllers
 
             var updatedTag = await _tagRepository.UpdateAsync(tag);
 
-            if(updatedTag is not null)
+            if (updatedTag is not null)
             {
                 // Show successfull message
             }
@@ -108,7 +128,7 @@ namespace DevBloggie.Web.Controllers
                 // Show error message
             }
 
-                return RedirectToAction("List");
+            return RedirectToAction("List");
         }
 
         [HttpPost]
@@ -119,7 +139,7 @@ namespace DevBloggie.Web.Controllers
             if (deletedTag is not null)
             {
                 return RedirectToAction("List");
-             
+
             }
             return RedirectToAction("Edit", new { id = editTagRequest.Id });
 
@@ -129,9 +149,9 @@ namespace DevBloggie.Web.Controllers
 
         private void ValidateAddTagRequest(AddTagRequest addTagRequest)
         {
-            if(addTagRequest.Name is not null && addTagRequest.DisplayName is not null)
+            if (addTagRequest.Name is not null && addTagRequest.DisplayName is not null)
             {
-                if(addTagRequest.Name == addTagRequest.DisplayName)
+                if (addTagRequest.Name == addTagRequest.DisplayName)
                 {
                     ModelState.AddModelError("DisplayName", "The Name cannot be same as DisplayName");
                 }
