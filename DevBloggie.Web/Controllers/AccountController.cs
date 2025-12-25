@@ -66,16 +66,20 @@ namespace DevBloggie.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-          var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, false, false);
-        
-            if (signInResult is not null && signInResult.Succeeded)
-            {
-                if(!string.IsNullOrWhiteSpace(loginViewModel.ReturnUrl))
-                {
-                    return Redirect(loginViewModel.ReturnUrl);
-                }
 
-                return RedirectToAction("Index", "Home");
+            if (ModelState.IsValid)
+            {
+                var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, false, false);
+
+                if (signInResult is not null && signInResult.Succeeded)
+                {
+                    if (!string.IsNullOrWhiteSpace(loginViewModel.ReturnUrl))
+                    {
+                        return Redirect(loginViewModel.ReturnUrl);
+                    }
+
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
             // Show Errors
